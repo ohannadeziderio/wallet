@@ -1,9 +1,9 @@
 <h2 align="center"> 
-  :receipt: Wallet Api
+  :receipt: Wallet
 </h1>
 
 ## :bookmark_tabs: Resume of application
-Hi, this project was developed to manage accounts and accounts transactions.
+Hi, this project is an API and it was developed to manage accounts and accounts transactions.
 
 ## :mag_right: Getting Started
 
