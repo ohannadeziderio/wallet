@@ -21,4 +21,9 @@ public class AccountDTO {
         this.id = id;
     }
 
+    public AccountDTO(int id, BigInteger documentNumber){
+        this.id = id;
+        this.documentNumber = documentNumber;
+    }
+
 }
