@@ -5,6 +5,8 @@ import com.wallet.api.account.infraestructure.AccountService;
 import io.swagger.annotations.Api;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,13 @@ public class AccountController {
     @PostMapping
     public ResponseEntity add(@Valid @RequestBody AccountDTO accountDTO) {
         AccountDTO account = accountService.save(accountDTO);
+
+        return ResponseEntity.ok().body(account);
+    }
+
+    @GetMapping("/{accountId}")
+    public ResponseEntity findById(@PathVariable("accountId") String accountId) {
+        AccountDTO account = accountService.findAccountById(Integer.parseInt(accountId));
 
         return ResponseEntity.ok().body(account);
     }
