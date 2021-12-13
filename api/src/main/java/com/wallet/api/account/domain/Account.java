@@ -24,22 +24,29 @@ public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_generator")
     @SequenceGenerator(name = "account_generator", sequenceName = "account_seq", allocationSize = 1)
-    private int accountId;
+    private int id;
 
     @Min(1)
     @NotNull(message = "Document number cannot be null")
     private BigInteger documentNumber;
+
+    public Account(){
+    }
+
+    public Account(BigInteger documentNumber) {
+        this.documentNumber = documentNumber;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return accountId == account.accountId;
+        return id == account.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(accountId);
+        return Objects.hash(id);
     }
 }
