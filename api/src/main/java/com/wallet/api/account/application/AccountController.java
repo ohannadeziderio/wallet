@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/accounts")
 public class AccountController {
+
     AccountService accountService;
 
     public AccountController(AccountService accountService) {
@@ -30,8 +31,8 @@ public class AccountController {
     }
 
     @GetMapping("/{accountId}")
-    public ResponseEntity findById(@PathVariable("accountId") String accountId) {
-        AccountDTO account = accountService.findAccountById(Integer.parseInt(accountId));
+    public ResponseEntity getById(@PathVariable("accountId") String accountId) {
+        AccountDTO account = accountService.getAccountById(Integer.parseInt(accountId));
 
         return ResponseEntity.ok().body(account);
     }

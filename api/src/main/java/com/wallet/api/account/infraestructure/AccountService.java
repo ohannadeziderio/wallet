@@ -37,10 +37,16 @@ public class AccountService {
         return accountRepository.findByDocumentNumber(documentNumber);
     }
 
-    public AccountDTO findAccountById(int accountId) {
-        Account account = accountRepository.findById(accountId).orElseThrow(EntityNotFoundException::new);
+    public AccountDTO getAccountById(int accountId) {
+        Account account = findById(accountId);
 
         return populateAccountDTO(account);
+    }
+
+    public Account findById(int accountId) {
+        Account account = accountRepository.findById(accountId).orElseThrow(EntityNotFoundException::new);
+
+        return account;
     }
 
     private Account populateAccount(AccountDTO accountDTO) {
