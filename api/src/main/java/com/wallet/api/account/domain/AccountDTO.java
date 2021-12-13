@@ -1,7 +1,6 @@
 package com.wallet.api.account.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.math.BigInteger;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
@@ -14,7 +13,7 @@ public class AccountDTO {
 
     @Min(1)
     @NotNull(message = "Document number cannot be null")
-    private BigInteger documentNumber;
+    private int documentNumber;
 
     public AccountDTO(){
     }
@@ -23,7 +22,7 @@ public class AccountDTO {
         this.id = id;
     }
 
-    public AccountDTO(int id, BigInteger documentNumber){
+    public AccountDTO(int id, int documentNumber){
         this.id = id;
         this.documentNumber = documentNumber;
     }

@@ -1,7 +1,6 @@
 package com.wallet.api.account.domain;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -28,12 +27,12 @@ public class Account implements Serializable {
 
     @Min(1)
     @NotNull(message = "Document number cannot be null")
-    private BigInteger documentNumber;
+    private int documentNumber;
 
     public Account(){
     }
 
-    public Account(BigInteger documentNumber) {
+    public Account(int documentNumber) {
         this.documentNumber = documentNumber;
     }
 

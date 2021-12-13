@@ -33,7 +33,7 @@ public class AccountService {
         return new AccountDTO(account.getId());
     }
 
-    private Optional<Account> findAccountByDocumentNumber(BigInteger documentNumber) {
+    private Optional<Account> findAccountByDocumentNumber(int documentNumber) {
         return accountRepository.findByDocumentNumber(documentNumber);
     }
 
