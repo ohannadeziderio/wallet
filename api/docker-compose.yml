@@ -1,8 +1,18 @@
 version: '3.1'
 services:
+  app:
+    build:
+      context: ..
+      dockerfile: api/Dockerfile
+      args:
+        SPRING_PROFILES_ACTIVE: dev
+    image: app:dev
+    depends_on:
+      - postgresql
   postgresql-server:
     container_name: postgresql-server
     image: postgres:13-alpine
+    restart: always
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
@@ -15,7 +25,22 @@ services:
       POSTGRESQL_URL: jdbc:postgresql://postgresql-server/wallet
       POSTGRESQL_USERNAME: postgres
       POSTGRESQL_PASSWORD: postgres
+      POSTGRES_SCHEMA: public
     ports:
       - "8080:8080"
     depends_on:
       - postgresql-server
+  flyway:
+    container_name: wallet-flyway
+    environment:
+      - FLYWAY_USER=postgres
+      - FLYWAY_PASSWORD=postgres
+      - FLYWAY_URL=jdbc:postgresql://postgresql-server/wallet
+      - FLYWAY_SCHEMAS=flyway,public
+      - FLYWAY_GROUP=true
+    image: flyway/flyway:latest
+    command: -locations=/src/main/resources/db/migration:/flyway/sql -connectRetries=60 migrate
+    volumes:
+        - $PWD/sql_versions:/flyway/sql
+    depends_on:
+      - postgres
