@@ -5,9 +5,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wallet.api.account.domain.Account;
-import com.wallet.api.account.domain.AccountDTO;
+import com.wallet.api.account.domain.AccountRequest;
 import com.wallet.api.account.infraestructure.AccountRepository;
-import com.wallet.api.transaction.domain.TransactionDTO;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,29 +41,29 @@ public class AccountControllerTest {
 
     @Test
     public void shouldReturn400WhenAddingAnInvalidAccount() throws Exception {
-        AccountDTO accountDTO = new AccountDTO();
+        AccountRequest accountRequest = new AccountRequest();
 
         mockMvc.perform(post("/api/accounts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(accountDTO)))
+                .content(objectMapper.writeValueAsString(accountRequest)))
             .andExpect(status().isBadRequest());
     }
 
     @Test
     public void shouldSuccessfullyAddAccount() throws Exception {
-        AccountDTO accountDTO = new AccountDTO();
-        accountDTO.setDocumentNumber(654321);
+        AccountRequest accountRequest = new AccountRequest();
+        accountRequest.setDocumentNumber(654321);
 
         mockMvc.perform(post("/api/accounts")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(accountDTO)))
+                .content(objectMapper.writeValueAsString(accountRequest)))
             .andExpect(status().isOk());
 
         Account account = accountRepository.findById(1).orElse(null);
 
         Assertions.assertNotNull(account);
-        Assertions.assertEquals(account.getDocumentNumber(), accountDTO.getDocumentNumber());
+        Assertions.assertEquals(account.getDocumentNumber(), accountRequest.getDocumentNumber());
     }
 
     @Test

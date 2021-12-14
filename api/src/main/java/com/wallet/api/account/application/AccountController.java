@@ -1,11 +1,11 @@
 package com.wallet.api.account.application;
 
-import com.wallet.api.account.domain.AccountDTO;
+import com.wallet.api.account.domain.AccountRequest;
+import com.wallet.api.account.domain.AccountResponse;
 import com.wallet.api.account.infraestructure.AccountService;
 import io.swagger.annotations.Api;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
-import javax.swing.text.html.parser.Entity;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +28,9 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity add(@Valid @RequestBody AccountDTO accountDTO) {
+    public ResponseEntity add(@Valid @RequestBody AccountRequest accountRequest) {
         try {
-            AccountDTO account = accountService.save(accountDTO);
+            AccountResponse account = accountService.save(accountRequest);
 
             return ResponseEntity.ok().body(account);
         } catch (EntityExistsException e) {
@@ -42,7 +42,7 @@ public class AccountController {
     @GetMapping("/{accountId}")
     public ResponseEntity getById(@PathVariable("accountId") String accountId) {
         try{
-            AccountDTO account = accountService.getAccountById(Integer.parseInt(accountId));
+            AccountResponse account = accountService.getAccountById(Integer.parseInt(accountId));
 
             return ResponseEntity.ok().body(account);
         } catch (EntityNotFoundException e) {

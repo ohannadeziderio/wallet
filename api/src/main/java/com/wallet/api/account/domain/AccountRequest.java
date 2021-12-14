@@ -1,30 +1,21 @@
 package com.wallet.api.account.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class AccountDTO {
-
-    @JsonIgnore
-    private int id;
+public class AccountRequest {
 
     @Min(1)
     @NotNull(message = "Document number cannot be null")
     private int documentNumber;
 
-    public AccountDTO(){
-    }
+    public AccountRequest() {
 
-    public AccountDTO(int id){
-        this.id = id;
     }
-
-    public AccountDTO(int id, int documentNumber){
-        this.id = id;
+    
+    public AccountRequest(int documentNumber) {
         this.documentNumber = documentNumber;
     }
-
 }

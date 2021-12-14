@@ -4,7 +4,8 @@ import com.wallet.api.account.domain.Account;
 import com.wallet.api.account.infraestructure.AccountService;
 import com.wallet.api.transaction.domain.OperationType;
 import com.wallet.api.transaction.domain.Transaction;
-import com.wallet.api.transaction.domain.TransactionDTO;
+import com.wallet.api.transaction.domain.TransactionRequest;
+import com.wallet.api.transaction.domain.TransactionResponse;
 import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -24,29 +25,29 @@ public class TransactionService {
     }
 
     @Transactional
-    public TransactionDTO save(TransactionDTO transactionDTO) {
+    public TransactionResponse save(TransactionRequest transactionRequest) {
 
-        Transaction transaction = populateTransaction(transactionDTO);
+        Transaction transaction = populateTransaction(transactionRequest);
 
         transactionRepository.save(transaction);
 
-        return new TransactionDTO(transaction.getId());
+        return new TransactionResponse(transaction.getId());
     }
 
-    private Transaction populateTransaction(TransactionDTO transactionDTO) {
+    private Transaction populateTransaction(TransactionRequest transactionRequest) {
         Transaction transaction = new Transaction();
 
-        Account account = accountService.findById(transactionDTO.getAccountId());
+        Account account = accountService.findById(transactionRequest.getAccountId());
 
         transaction.setAccount(account);
 
-        OperationType operationType = operationTypeService.findById(transactionDTO.getOperationTypeId());
+        OperationType operationType = operationTypeService.findById(transactionRequest.getOperationTypeId());
 
         transaction.setOperationType(operationType);
-        transaction.setAmount(transactionDTO.getAmount());
+        transaction.setAmount(transactionRequest.getAmount());
 
         if(transaction.getOperationType().getId() != PAGAMENTO) {
-            transaction.setAmount(-transactionDTO.getAmount());
+            transaction.setAmount(-transactionRequest.getAmount());
         }
 
         return transaction;

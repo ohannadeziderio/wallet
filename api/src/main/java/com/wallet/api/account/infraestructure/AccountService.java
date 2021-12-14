@@ -1,8 +1,8 @@
 package com.wallet.api.account.infraestructure;
 
 import com.wallet.api.account.domain.Account;
-import com.wallet.api.account.domain.AccountDTO;
-import java.math.BigInteger;
+import com.wallet.api.account.domain.AccountRequest;
+import com.wallet.api.account.domain.AccountResponse;
 import java.util.Optional;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
@@ -19,25 +19,25 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountDTO save(AccountDTO accountDTO) {
-        boolean existsAccountWithDocumentNumber = findAccountByDocumentNumber(accountDTO.getDocumentNumber()).isPresent();
+    public AccountResponse save(AccountRequest accountRequest) {
+        boolean existsAccountWithDocumentNumber = findAccountByDocumentNumber(accountRequest.getDocumentNumber()).isPresent();
 
         if(existsAccountWithDocumentNumber) {
             throw new EntityExistsException();
         }
 
-        Account account = populateAccount(accountDTO);
+        Account account = populateAccount(accountRequest);
 
         accountRepository.save(account);
 
-        return new AccountDTO(account.getId());
+        return new AccountResponse(account.getId(), account.getDocumentNumber());
     }
 
     private Optional<Account> findAccountByDocumentNumber(int documentNumber) {
         return accountRepository.findByDocumentNumber(documentNumber);
     }
 
-    public AccountDTO getAccountById(int accountId) {
+    public AccountResponse getAccountById(int accountId) {
         Account account = findById(accountId);
 
         return populateAccountDTO(account);
@@ -49,15 +49,15 @@ public class AccountService {
         return account;
     }
 
-    private Account populateAccount(AccountDTO accountDTO) {
-        Account account = new Account(accountDTO.getDocumentNumber());
+    private Account populateAccount(AccountRequest accountRequest) {
+        Account account = new Account(accountRequest.getDocumentNumber());
 
         return account;
     }
 
-    private AccountDTO populateAccountDTO(Account account) {
-        AccountDTO accountDTO = new AccountDTO(account.getId(), account.getDocumentNumber());
+    private AccountResponse populateAccountDTO(Account account) {
+        AccountResponse accountResponse = new AccountResponse(account.getId(), account.getDocumentNumber());
 
-        return accountDTO;
+        return accountResponse;
     }
 }

@@ -1,15 +1,12 @@
 package com.wallet.api.transaction.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wallet.api.account.domain.AccountDTO;
 import java.util.Date;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
-@Data
-public class TransactionDTO {
 
-    @JsonIgnore
-    private int id;
+@Data
+public class TransactionRequest {
 
     @NotNull(message = "Account cannot be null")
     private int accountId;
@@ -22,11 +19,15 @@ public class TransactionDTO {
     @JsonIgnore
     private Date eventDate;
 
-    public TransactionDTO() {
+    public TransactionRequest() {
+
     }
 
-    public TransactionDTO(int id) {
-        this.id = id;
+    public TransactionRequest(int accountId, int operationTypeId, float amount,
+        Date eventDate) {
+        this.accountId = accountId;
+        this.operationTypeId = operationTypeId;
+        this.amount = amount;
+        this.eventDate = eventDate;
     }
-
 }

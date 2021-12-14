@@ -4,7 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wallet.api.transaction.domain.TransactionDTO;
+import com.wallet.api.transaction.domain.TransactionRequest;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ public class TransactionControllerTest {
 
     @Test
     public void shouldReturn404WhenTryingToSaveATransactionWithANonExistentAccount() throws Exception {
-        TransactionDTO transactionDTO = new TransactionDTO();
+        TransactionRequest transactionDTO = new TransactionRequest();
         transactionDTO.setAccountId(1);
         transactionDTO.setOperationTypeId(3);
         transactionDTO.setAmount(40);

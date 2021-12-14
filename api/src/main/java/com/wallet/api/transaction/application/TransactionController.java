@@ -1,6 +1,7 @@
 package com.wallet.api.transaction.application;
 
-import com.wallet.api.transaction.domain.TransactionDTO;
+import com.wallet.api.transaction.domain.TransactionRequest;
+import com.wallet.api.transaction.domain.TransactionResponse;
 import com.wallet.api.transaction.infraestructure.TransactionService;
 import io.swagger.annotations.Api;
 import javax.persistence.EntityNotFoundException;
@@ -24,9 +25,9 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity add(@Valid @RequestBody TransactionDTO transactionDTO) {
+    public ResponseEntity add(@Valid @RequestBody TransactionRequest transactionRequest) {
         try {
-            TransactionDTO trasaction = transactionService.save(transactionDTO);
+            TransactionResponse trasaction = transactionService.save(transactionRequest);
 
             return ResponseEntity.ok().body(trasaction);
         } catch (EntityNotFoundException e) {
