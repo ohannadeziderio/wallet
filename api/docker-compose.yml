@@ -1,0 +1,23 @@
+version: '3.1'
+services:
+  postgresql-server:
+    container_name: postgresql-server
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: wallet
+      POSTGRES_USER: wallet
+    ports:
+      - "5432:5432"
+  wallet:
+    container_name: wallet
+    build: .
+    environment:
+      POSTGRESQL_URL: jdbc:postgresql://postgresql-server/wallet
+      POSTGRESQL_USERNAME: wallet
+      POSTGRESQL_PASSWORD: wallet
+      POSTGRES_SCHEMA: public
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresql-server
