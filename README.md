@@ -8,12 +8,12 @@ Hi, this project is an API and it was developed to manage accounts and accounts 
 ## :mag_right: Getting Started
 
 - Download the project: ```git clone https://github.com/ohannadeziderio/wallet.git``` 
-- Configure a Postgres database (version x.x)
+- Configure a Postgres database (version 13)
   - Name: wallet
   - Port: 5432
   - Username: postgres
   - Password: postgres 
-- The endpoints were documented in a Swagger file, start the project and click [here]()
+- The endpoints were documented in a Swagger file, start the project and click [here](http://localhost:8080/wallet/swagger-ui/index.html)
 
 ## :woman_technologist: Author
 
@@ -23,8 +23,8 @@ Hi, this project is an API and it was developed to manage accounts and accounts 
 
 - Gradle
 - Java 11
-- Spring Boot x.x.x
-- Postgres x.x
+- Spring Boot 2.6.1
+- Postgres 13
 - Flyway
 - Swagger3
 - Docker
